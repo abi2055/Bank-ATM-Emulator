@@ -35,14 +35,6 @@ public class bankmain {
 		return index;
 	}
 	
-	// TO DO
-	// Commenting
-	// Pin code
-	// Search and avoid duplicate names 
-	// Maybe do some file IO to keep track of the names
-	// and save it to a file you can read through
-	
-	
 	public static boolean pin_check (Client x) {
 		return true;
 	}
