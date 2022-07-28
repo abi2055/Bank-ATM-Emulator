@@ -51,12 +51,17 @@ public class bankmain {
 		Scanner in = new Scanner (System.in);
 		
 		int option;
+		int chances;
+		boolean check;
+		int pin;
 		Client[] client_list = new Client[0];
 		
 		System.out.println("Welcome to the Bank!");
 		System.out.println("-------------------------------------");
 		
 		do {
+			chances = 3;
+			check = false;
 			option = menu();
 			if (option == 1) {	
 				System.out.println("Enter Name: ");
@@ -69,14 +74,20 @@ public class bankmain {
 					System.out.println("Please enter a valid age: ");
 					age = in.nextInt();
 				}
-
+				System.out.println("Enter 4 digit pin (to access your balance): ");
+				pin = in.nextInt();
+				while (pin<1000 && pin>10000) {
+					System.out.println("Please enter a valid pin: ");
+					pin = in.nextInt();
+				}
+				
 				Client[] temp = new Client [client_list.length+1];
 				
 				for (int i = 0; i<client_list.length; i++) {
 					temp[i] = client_list[i];
 				}
 				
-				temp[client_list.length] = new Client(name, gender, age); 
+				temp[client_list.length] = new Client(name, gender, age, pin); 
 				client_list = temp;
 
 				System.out.println("You have been successfully added to the system!");
@@ -90,12 +101,25 @@ public class bankmain {
 					System.out.println("Your name cannot be found! Please Try Again!");
 				}
 				else {
-					System.out.println("Hi " + name + "!");
-					System.out.println("Current Balance: $" + client_list[index].get_balance());
-					System.out.println("Enter the amount you would like to withdraw: ");
-					float amount = in.nextFloat();
-					float balance = client_list[index].withdraw_funds(amount);
-					System.out.println("Current Balance: $" + balance);
+					do {
+						System.out.println("Enter Pin Code: ");
+						pin = in.nextInt();
+						if (pin != client_list[index].get_pin()) {
+							System.out.println("Incorrect Pin");
+							chances = chances - 1;
+							System.out.println(chances + " chances remaining");
+						}
+						else {
+							System.out.println("Correct pin!");
+							System.out.println("Hi " + name + "!");
+							System.out.println("Current Balance: $" + client_list[index].get_balance());
+							System.out.println("Enter the amount you would like to withdraw: ");
+							float amount = in.nextFloat();
+							float balance = client_list[index].withdraw_funds(amount);
+							System.out.println("Current Balance: $" + balance);
+							break;
+						}
+					} while (chances != 0);
 				}
 			}
 			else if (option == 3) {
@@ -107,12 +131,24 @@ public class bankmain {
 					System.out.println("Your name cannot be found! Please Try Again!");
 				}
 				else {
-					System.out.println("Hi " + name + "!");
-					System.out.println("Current Balance: $" + client_list[index].get_balance());
-					System.out.println("Enter the amount you would like to add: ");
-					float amount = in.nextFloat();
-					float balance = client_list[index].add_funds(amount);
-					System.out.println("Current Balance: $" + balance);
+					do {
+						System.out.println("Enter Pin Code: ");
+						pin = in.nextInt();
+						if (pin != client_list[index].get_pin()) {
+							System.out.println("Incorrect Pin");
+							chances = chances - 1;
+							System.out.println(chances + " chances remaining");
+						}
+						else {
+							System.out.println("Hi " + name + "!");
+							System.out.println("Current Balance: $" + client_list[index].get_balance());
+							System.out.println("Enter the amount you would like to add: ");
+							float amount = in.nextFloat();
+							float balance = client_list[index].add_funds(amount);
+							System.out.println("Current Balance: $" + balance);
+							break;
+						}
+					} while (chances != 0);
 				}
 			}
 			else if (option == 4) {

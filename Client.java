@@ -1,17 +1,20 @@
-
+import java.util.Random;
 public class Client {
+	Random r = new Random();
 	
 	private String name;
 	private int age;
 	private String gender;
 	private float balance;
+	private int pin;
 	
 	// Constructors
-	public Client (String client_name, String client_gender, int client_age) {
+	public Client (String client_name, String client_gender, int client_age, int client_pin) {
 		name = client_name;
 		age = client_age;
 		gender = client_gender;
 		balance = 0;
+		pin = client_pin;
 	}
 	
 	// Accessors
@@ -29,6 +32,10 @@ public class Client {
 	
 	public String get_gender() {
 		return gender;
+	}
+	
+	public int get_pin () {
+		return pin;
 	}
 	
 	// Mutators
